@@ -1,5 +1,6 @@
 import gspread
 from google.oauth2.service_account import Credentials
+from pprint import pprint
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -60,7 +61,18 @@ def update_sales_worksheet(data):
     print("Sales worksheet updated successfully...\n")
 
 
-data = get_sales_data()
-update_sales_worksheet(data)
+def calculate_surplus_data(sales_row):
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    stock_row = stock[-1]
 
+def main():
+    """
+    Run all program functions
+    """
+    data = get_sales_data()
+    update_sales_worksheet(data)
+    calculate_surplus_data(data)
 
+print("Weclome to Love Sandwiches Data Automation")
+main()
