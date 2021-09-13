@@ -29,7 +29,7 @@ def get_sales_data():
             print("Data is valid!")
             sales_data = [int(item) for item in sales_data]
             break
-    
+
     return sales_data
 
 def validate_data(values):
@@ -48,24 +48,23 @@ def validate_data(values):
     except ValueError as e:
         print(f"Invalid data: {e}, please try again.\n")
         return False
-    
+
     return True
 
-def update_sales_worksheet(data):
+def update_sales_worksheet(data, worksheet):
     """
-    Update sales worksheet, add new row with the list data provided.
+    Update worksheet, add new row with the list data provided.
     """
-    print("Updating sales worksheet...\n")
-    sales_worksheet = SHEET.worksheet("sales")
-    sales_worksheet.append_row(data)
-    print("Sales worksheet updated successfully...\n")
-
+    print(f"Updating {worksheet} worksheet...\n")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet.capitalize()} worksheet updated successfully...\n")
 
 def calculate_surplus_data(sales_row):
     print("Calculating surplus data...\n")
     stock = SHEET.worksheet("stock").get_all_values()
     stock_row = stock[-1]
-    
+
     surplus_data = []
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
@@ -73,24 +72,15 @@ def calculate_surplus_data(sales_row):
     
     return surplus_data
 
-def update_surplus_worksheet(surplus_data):
-    """
-    Update surplus worksheet, add new row with the list data provided.
-    """
-    print("Updating surplus worksheet...\n")
-    surplus_worksheet = SHEET.worksheet("surplus")
-    surplus_worksheet.append_row(surplus_data)
-    print("Surplus worksheet updated successfully...\n")
-
 
 def main():
     """
     Run all program functions
     """
     data = get_sales_data()
-    update_sales_worksheet(data)
+    update_sales_worksheet(data, "sales")
     surplus_data = calculate_surplus_data(data)
-    update_surplus_worksheet(surplus_data)
+    update_sales_worksheet(data, "surplus")
 
 print("Weclome to Love Sandwiches Data Automation")
 main()
