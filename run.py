@@ -77,7 +77,7 @@ def main():
     Run all program functions
     """
     data = get_sales_data()
-    update_sales_worksheet(data, "sales")
+    update_worksheet(data, "sales")
     surplus_data = calculate_surplus_data(data)
     update_worksheet(surplus_data, "surplus")
 
